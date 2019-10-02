@@ -8,8 +8,10 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { ApiOutputComponent } from './api-output/api-output.component';
+import { FaceIndexComponent } from './face-index/face-index.component';
 import { FaceMatchComponent } from './face-match/face-match.component';
 import { AzureDetectComponent } from './azure-detect/azure-detect.component';
+import { AzureTrainComponent } from './azure-train/azure-train.component';
 import { AzureVerifyComponent } from './azure-verify/azure-verify.component';
 
 import { CounterComponent } from './counter/counter.component';
@@ -25,8 +27,10 @@ import { AzureFaceRecognitionService } from "./services/azure-face-recognition.s
     NavMenuComponent,
     HomeComponent,
     ApiOutputComponent,
+    FaceIndexComponent,
     FaceMatchComponent,
     AzureDetectComponent,
+    AzureTrainComponent,
     AzureVerifyComponent,
 
     PrettyPrintPipe,
@@ -42,6 +46,7 @@ import { AzureFaceRecognitionService } from "./services/azure-face-recognition.s
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'api-output', component: ApiOutputComponent },
       { path: 'face-match', component: FaceMatchComponent },
+      { path: 'face-index', component: FaceIndexComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])

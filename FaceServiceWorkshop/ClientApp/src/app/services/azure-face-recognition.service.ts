@@ -7,7 +7,7 @@ export class AzureFaceRecognitionService {
   constructor(private httpClient: HttpClient) { }
 
   detect(base64Image: string) {
-    const headers = this.getHeaders(environment.azureKey);
+    const headers = new HttpHeaders().set('Content-Type', 'application/octet-stream').set('Ocp-Apim-Subscription-Key', environment.azureKey);
     const params = new HttpParams()
       .set('returnFaceId', 'true')
       .set('returnFaceLandmarks', 'false')
@@ -28,17 +28,77 @@ export class AzureFaceRecognitionService {
   }
 
   verify(faceId1: string, faceId2: string) {
-    const headers = this.getHeaders(environment.azureKey);
-    const body = { faceId1: faceId1, faceId2: faceId2}
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Ocp-Apim-Subscription-Key', environment.azureKey);
+    const body = { faceId1: faceId1, faceId2: faceId2 }
 
     return this.httpClient.post<any>(
       environment.azureEndpoint + "/verify",
+      body,
       {
-        headers,
-        body
+        headers
       }
     );
   }
+
+  createPersonGroup(personGroupId: string, name: string, userData: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Ocp-Apim-Subscription-Key', environment.azureKey);
+    const body =
+    {
+      "name": name,
+      "userData": userData,
+      "recognitionModel": "recognition_01"
+    }
+
+    return this.httpClient.put<any>(
+      environment.azureEndpoint + "/persongroups/" + personGroupId,
+      body,
+      {
+        headers
+      }
+    );
+  }
+
+  deletePersonGroup(personGroupId: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Ocp-Apim-Subscription-Key', environment.azureKey);
+
+    return this.httpClient.delete<any>(
+      environment.azureEndpoint + "/persongroups/" + personGroupId,
+      {
+        headers
+      }
+    );
+  }
+
+  createPersonGroupPerson(personGroupId: string, name: string, userData: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Ocp-Apim-Subscription-Key', environment.azureKey);
+    const body =
+    {
+      "name": name,
+      "userData": userData
+    }
+
+    return this.httpClient.post<any>(
+      environment.azureEndpoint + "/persongroups/" + personGroupId + "/persons",
+      body,
+      {
+        headers
+      }
+    );
+  }
+
+  createPersonGroupPersonPersistFace(personGroupId: string, personId: string, base64Image: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/octet-stream').set('Ocp-Apim-Subscription-Key', environment.azureKey);
+    const blob = this.makeblob(base64Image);
+
+    return this.httpClient.post<any>(
+      environment.azureEndpoint + "/persongroups/" + personGroupId + "/persons/" + personId + "/persistedFaces",
+      blob,
+      {
+        headers
+      }
+    );
+  }
+
 
 
 
@@ -55,13 +115,5 @@ export class AzureFaceRecognitionService {
     }
 
     return new Blob([uInt8Array], { type: contentType });
-  }
-
-  private getHeaders(subscriptionKey: string) {
-    let headers = new HttpHeaders();
-    headers = headers.set('Content-Type', 'application/octet-stream');
-    headers = headers.set('Ocp-Apim-Subscription-Key', subscriptionKey);
-
-    return headers;
   }
 }

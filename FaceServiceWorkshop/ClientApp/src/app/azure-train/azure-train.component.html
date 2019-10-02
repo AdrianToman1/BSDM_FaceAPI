@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="column">
+    {{ stage }}
+  </div>
+  <div class="column">
+    <p *ngIf="!azureOutput"><em>Loading...</em></p>
+    <pre [innerHTML]="azureOutput | prettyprint"></pre>
+  </div>
+</div>

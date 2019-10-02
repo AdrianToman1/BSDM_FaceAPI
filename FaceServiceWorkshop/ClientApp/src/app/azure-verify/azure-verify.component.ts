@@ -4,8 +4,7 @@ import { AzureFaceRecognitionService } from "../services/azure-face-recognition.
 
 @Component({
   selector: 'azure-verify',
-  templateUrl: './azure-verify.component.html',
-  styleUrls: ['./azure-verify.css']
+  templateUrl: './azure-verify.component.html'
 })
 export class AzureVerifyComponent {
   private _faceId1 = "";
@@ -39,7 +38,6 @@ export class AzureVerifyComponent {
         this._faceId1,
         this._faceId2
       ).subscribe(result => {
-        console.log(result);
         this.azureOutput = result;
       }, error => console.error(error));
     }

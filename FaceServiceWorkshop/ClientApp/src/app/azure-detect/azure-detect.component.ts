@@ -4,14 +4,13 @@ import { AzureFaceRecognitionService } from "../services/azure-face-recognition.
 
 @Component({
   selector: 'azure-detect',
-  templateUrl: './azure-detect.component.html',
-  styleUrls: ['./azure-detect.css']
+  templateUrl: './azure-detect.component.html'
 })
 export class AzureDetectComponent {
   private _image = "";
   azureOutput: any;
   @Input() faceId: string;
-  @Output() faceIdChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() faceIdChange = new EventEmitter<string>();
 
   constructor(private azureFaceRecognitionService: AzureFaceRecognitionService) {
   }

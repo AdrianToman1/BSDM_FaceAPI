@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+  .column pre {
+    background: ghostwhite;
+  }
+
+.column img {
+  max-width: 50%;
+}
